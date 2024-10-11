@@ -1,69 +1,81 @@
 import 'package:flutter/material.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
+
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: CircleAvatar(
-                  backgroundColor: Colors.blue,
-                  child: Text(
-                    'BM',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
+          Image.asset('assets/user.png', width: 200, height: 200),
+          const SizedBox(height: 16),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Correo electronico',
+              label: Text('Correo electronico'),
+              labelStyle: TextStyle(color: Colors.black),
+            ),
+            keyboardType: TextInputType.emailAddress,
+            controller: _email,
+          ),
+          const SizedBox(height: 16),
+          TextFormField(
+            decoration: InputDecoration(
+              hintText: 'Contraseña',
+              label: Text('Contraseña'),
+              labelStyle: TextStyle(color: Colors.black),
+              suffixIcon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _isObscure = !_isObscure;
+                  });
+                },
+                icon: Icon(
+                  _isObscure ? Icons.visibility : Icons.visibility_off,
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Milton Jaimes',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Hace 5 min',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ],
-              ),
-              Spacer(), // Empuja el ícono a la derecha
-              Padding(
-                padding: EdgeInsets.all(16.0), // Mantén el padding aquí
-                child: Icon(Icons.more_vert),
-              ),
-            ],
+            ),
+            controller: _password,
+            obscureText: _isObscure, // Cambiado a _isObscure
           ),
-          Image.asset(
-            'assets/septiembre.png',
+          const SizedBox(height: 48),
+          SizedBox(
             width: double.infinity,
-            height: 400,
-          ),
-          Row(
-            children: const [
-              Icon(
-                Icons.favorite,
-                color: Colors.red,
-              ),
-              Icon(Icons.message),
-              Icon(Icons.send),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Icon(Icons.save),
+            height: 48,
+            child: ElevatedButton(
+              onPressed: () {
+                print('Email: ${_email.text}');
+                print(
+                    'Contraseña: ${_password.text}'); // Corrige el texto a "Contraseña"
+              },
+              style: OutlinedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
                 ),
               ),
-            ],
+              child: const Text(
+                  'Iniciar sesión'), // Corrige el texto a "Iniciar sesión"
+            ),
+          ),
+          const SizedBox(height: 16),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/recover_password');
+            },
+            child: const Text('Olvidé mi contraseña'),
           ),
         ],
       ),

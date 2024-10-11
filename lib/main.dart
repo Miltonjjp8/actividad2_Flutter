@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:actividad2/modules/auth/login.dart';
+import 'package:actividad2/modules/forgot_password/recover_password.dart';
+import 'package:actividad2/modules/confirm_code/code_verification.dart';
+import 'package:actividad2/modules/new_password/new_password.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +18,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        //'/': (context) => const Login(),
+        '/': (context) => const Login(),
+        '/recover_password': (context) => const RecoverPassword(),
+        '/code_verification': (context) => const CodeVerification(),
+        '/new_password': (context) => const NewPasswordForm(),
       },
     );
   }
@@ -64,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
